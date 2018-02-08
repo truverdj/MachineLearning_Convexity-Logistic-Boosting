@@ -1,0 +1,47 @@
+---
+title: "STA 561 HW3 (Convexity, Logistic, Boosting)"
+author: "Daniel Truver"
+date: "2/7/2018"
+header-includes:
+  - \usepackage{amsmath}
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### (1) Linear Separability Implies Disjoint Convex Hulls
+
+We proceed with proof by contradiction. 
+
+For $\{x_n\}$ and $\{x_m'\}$, let their convex hulls be given by
+$$
+\begin{aligned}
+& X = \{x: x = \sum_n\alpha_nx_x; ~ \alpha_n \geq0; ~\sum_n\alpha_n = 1 \} \\
+& X' = \{x:x = \sum_m\alpha_m'x_m';~\alpha_m'\geq0;~\sum_m\alpha_m' = 1 \}
+\end{aligned}
+$$
+
+(RAA) Suppose $\{x_n\}$ and $\{x_m'\}$ are linearly separable such that for a vector $w$ and scalar $w_0$ $w^Tx_n + w_0 >0,~ w^Tx_m' + w_0 < 0 ~\forall x_n, x_m'$ and $X\cap X' \neq \emptyset$.
+
+Then $$\exists~ x \in X\cap X'$$
+such that 
+\begin{align}
+x &= \sum_n\alpha_nx_n = \sum_m\alpha_m'x_m'\\
+w^Tx &= w^T\sum_n\alpha_nx_n = w^T\sum_m\alpha_m'x_m'\\
+w^Tx &= \sum_n\alpha_n(w^Tx_n) = \sum_m\alpha_m'(w^Tx_m') 
+\end{align}
+
+But, from linear separability, we have $w^Tx_n > -w_0$ and $w^Tx_m' < -w_0$. If we use these relations in the summations above, we obtain
+$$
+\begin{aligned}
+& \sum_n\alpha_n(w^Tx_n) > \sum_n\alpha_n(-w_0), \quad  \sum_m\alpha_m'(w^Tx_m') < \sum_m\alpha_m'(-w_0) \\
+& \implies \sum_n\alpha_n(w^Tx_n) > -w_0\sum_n\alpha_n, \quad \sum_m\alpha_m'(w^Tx_m') < -w_0\sum_m\alpha_m' \\
+& \implies \sum_n\alpha_n(w^Tx_n) > -w_0, \quad \sum_m\alpha_m'(w^Tx_m') < -w_0 \\
+& \implies w^Tx > -w_0 \quad\text{and}\quad w^Tx < -w_0 \quad\text{by (3)} \\
+& ~\Rightarrow\!\Leftarrow
+\end{aligned}
+$$
+
+Therefore, $X$ and $X'$ are disjoint; the convex hulls do not intersect. 
