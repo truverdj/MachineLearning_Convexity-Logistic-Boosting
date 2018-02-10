@@ -45,3 +45,20 @@ $$
 $$
 
 Therefore, $X$ and $X'$ are disjoint; the convex hulls do not intersect. 
+
+#### (2) Logistic Regression and Gradient Descent
+
+##### (a) Logistic Sigmoid Function 
+
+$$
+\begin{aligned}
+\sigma'(a) 
+&= \frac{d}{da}(1+e^{-a})^{-1} \\
+&= e^{-a}(1+e^{-a})^{-2} \\
+&= (1+e^{-a})^{-1}\left(\frac{e^{-a}}{1+e^{-a}}  \right) \\
+&= \sigma(a)\left( \frac{1+e^{-a}-1}{1+e^{-a}} \right) \\
+& = \sigma(a)\left( 1- \frac{1}{1+e^{-a}} \right) \\
+&= \sigma(a)(1-\sigma(a))
+\end{aligned}
+$$  
+
