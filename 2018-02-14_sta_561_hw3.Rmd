@@ -77,4 +77,37 @@ $$
 
 ##### (c) Convexity of the Cross Entropy Loss 
 
-We want to show that 
+We want to show that, for $x, z \in \mathbb{R}^p$ and $\theta \in [0,1]$, 
+$$
+L_w(\theta x + (1-\theta)z) \leq \theta L(x) + (1-\theta)L(z).
+$$
+
+It suffices to show that $\forall i$, 
+$$
+g(x^{(i)}) = -y^{(i)}\log\sigma(w^Tx^{(i)}) -(1- y^{(i)})\log(1-\sigma(w^Tx^{(i)}))
+$$
+is convex.
+
+We consider 2 cases, $y^{(i)}=1$ and $y^{(i)} =0$. 
+Case 1 ($y^{(i)} =1$):
+$$
+g(x) = -\log\sigma(w^Tx) = \log(1+e^{-w^Tx})
+$$
+
+If we take the second derivative of this function in any direction $x_j$, we get
+$$
+\begin{aligned}
+\frac{\partial^2}{\partial^2x_j}g(x) 
+&= \frac{\partial}{\partial x_j}\left( -w_j e^{-w^Tx}(1+e^{-w^Tx})^{-1} \right) \\
+&= w_j^2 e^{-w^Tx}(1+e^{-w^Tx})^{-1} - w_j^2(e^{-w^Tx})^2(1+e^{-w^Tx})^{-2} \\
+&= w_j^2 e^{-w^Tx}(1+e^{-w^Tx})^{-1} (1- e^{-w^Tx}(1+e^{-w^Tx})^{-1}) \\
+&\geq 0
+\end{aligned}
+$$
+
+Therefore, this function is convex. 
+
+Case 2 ($y^{(i)} = 0$):
+$$
+f(x) = -\log(1-\sigma(w^Tx))
+$$
