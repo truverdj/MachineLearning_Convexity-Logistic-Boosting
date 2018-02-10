@@ -62,3 +62,19 @@ $$
 \end{aligned}
 $$  
 
+##### (b) Derivative of Cross Entropy 
+
+$$
+\begin{aligned}
+\frac{\partial}{\partial w_j}L_w
+&= \sum_{i = 1}^n \frac{\partial}{\partial w_j}\left(-y^{(i)}\log\sigma(w^Tx^{(i)})\right) - \frac{\partial}{\partial w_j}\left( (1- y^{(i)})\log(1-\sigma(w^Tx^{(i)})) \right) \\
+&= \sum_{i = 1}^n -y^{(i)}\frac{1}{\sigma(w^Tx^{(i)})}\sigma(w^Tx^{(i)})(1-\sigma(w^Tx^{(i)}))(-x_j^{(i)})\\
+&\quad \quad \quad - (1-y^{(i)})\frac{1}{1-\sigma(w^Tx^{(i)})}\left(-\sigma(w^Tx^{(i)})\right)\left(1-\sigma(w^T)\right)(-x_j^{(i)}) \\
+&= \sum_{i=1}^n y^{(i)}x_j^{(i)}\left( 1-\sigma(w^Tx^{(i)}) \right) - (1-y^{(i)})x_j^{(i)}\sigma(w^Tx^{(i)}) \\
+&= \sum_{i = 1}^n x_j^{(i)}\left( y^{(i)} \big( 1-\sigma(w^Tx^{(i)}) \big) - (1-y^{(i)})\sigma(w^Tx^{(i)}) \right)
+\end{aligned}
+$$  
+
+##### (c) Convexity of the Cross Entropy Loss 
+
+We want to show that 
