@@ -46,6 +46,8 @@ $$
 
 Therefore, $X$ and $X'$ are disjoint; the convex hulls do not intersect. 
 
+******
+
 #### (2) Logistic Regression and Gradient Descent
 
 ##### (a) Logistic Sigmoid Function 
@@ -111,3 +113,25 @@ Case 2 ($y^{(i)} = 0$):
 $$
 f(x) = -\log(1-\sigma(w^Tx))
 $$
+Taking the second derivative w.r.t. $x_j$, we get 
+$$
+\begin{aligned}
+\frac{\partial^2}{\partial^2x_j}f(x) 
+&= \frac{\partial^2}{\partial^2x_j} \left( -\log(e^{-w^Tx}) -\log(1+e^{-w^Tx})^{-1} \right)  \\
+&= \frac{\partial}{\partial x_j}\left( w_j -w_j e^{-w^Tx}(1+e^{-w^Tx})^{-1} \right) \\
+&\geq 0
+\end{aligned}
+$$
+since this derivative will be the same as Case 1. 
+
+Therefore, we have shown the summand of the cross entropy loss function to be complex $\forall i$. The positive sum of convex functions is convex, so the cross entropy loss is convex. 
+
+##### (d) See Code
+
+******
+
+#### (3) Boosting
+
+##### (a) Perfect Training Classification 
+
+Assume the the weak learning assumption (WLA). 
