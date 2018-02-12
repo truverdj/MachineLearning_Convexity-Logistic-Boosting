@@ -134,4 +134,32 @@ Therefore, we have shown the summand of the cross entropy loss function to be co
 
 ##### (a) Perfect Training Classification 
 
-Assume the the weak learning assumption (WLA). 
+Assume the the weak learning assumption (WLA). So, we get 
+$$
+\epsilon_t = \text{error}_{d_t}(h_{(t)}) =: \frac{1}{2} - \gamma_t, \quad \gamma_t > \gamma_{WLA}
+$$
+
+Now sit and stare at the problem for a couple hours. Get frustrated. Eat a sandwich. Come back to the problem. Write down thought process.
+
+```{r allworkandnoplay, echo=FALSE}
+tootrue = rep("\nAll work and no play makes Jack a dull boy.",5)
+cat(tootrue)
+```  
+
+Another sandwich. Scroll up in the lecture notes. Epiphany.
+
+$$
+\begin{aligned}
+\text{classification error}
+&\leq \frac{1}{n}\sum_{i=1}^n e^{-y_if(x_i)}\\
+&= \frac{1}{n} \sum_{i=1}^n \exp\left( -y_i\sum_{t=1}^T\alpha_th_{(t)}(x_i) \right) \\
+&= \frac{1}{n} \sum_{i=1}^n\prod_{t=1}^T \exp\left( -y_i\alpha_th_{(t)}(x_i) \right) \\
+&= \sum_{i=1}^n \frac{1}{n}\exp\left( -y_i\alpha_1h_{(1)}(x_i) \right)\cdots\exp\left( -y_i\alpha_Th_{(T)}(x_i) \right) \\
+&= \sum_{i=1}^n d_{1,i}\exp\left( -y_i\alpha_1h_{(1)}(x_i) \right)\cdots\exp\left( -y_i\alpha_Th_{(T)}(x_i) \right) \\
+&= \sum_{i = 1}^n d_{2,i}Z_1\exp\left( -y_i\alpha_2h_{(2)}(x_i) \right)\cdots\exp\left( -y_i\alpha_Th_{(T)}(x_i) \right) \\
+&= \sum_{i=1}^n d_{T+1,i}(Z_1\cdots Z_T) \\
+&= \prod_{t=1}^T Z_t \quad \quad (d_{T+1} \text{ is a distribution}) 
+\end{aligned}
+$$
+
+We now have the error bounded by the product of the normalization constants which appear to be functions of $t$. We now want to find a bound of each indivual $Z_t$, hopefully still a function of $t$, and show that everything together approaches 0 as $t$ approaches $\infty$. 
