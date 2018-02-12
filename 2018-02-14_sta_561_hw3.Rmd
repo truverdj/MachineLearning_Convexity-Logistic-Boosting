@@ -163,3 +163,39 @@ $$
 $$
 
 We now have the error bounded by the product of the normalization constants which appear to be functions of $t$. We now want to find a bound of each indivual $Z_t$, hopefully still a function of $t$, and show that everything together approaches 0 as $t$ approaches $\infty$. 
+
+$$
+\begin{aligned}
+Z_t 
+&= \sum_{i=1}^n d_{t,i} e^{-y_i\alpha_th_{(t)}(x_i)} \\
+&= \sum_{i:h_t(x_i) = y_i} d_{t,i}e^{-\alpha_t} + \sum_{i:h_t(x_i) \neq y_i} d_{t,i}e^{\alpha_t}\\
+&= (\gamma_t+1/2)e^{-\alpha_t} + (1/2-\gamma_t)e^{\alpha_t} \quad \quad (\text{by WLA}) \\
+&= (\gamma_t+1/2)\left(\frac{1/2-\gamma_t}{\gamma_t+1/2}\right)^\frac{1}{2} + (1/2-\gamma_t)\left(\frac{\gamma_t+1/2}{1/2-\gamma_t}\right)^\frac{1}{2}\quad (\text{by defn. of } \alpha_t) \\
+&= 2\sqrt{(\gamma_t+1/2)(1/2-\gamma_t)} \\
+&= \sqrt{1 - 4\gamma_t^2} \\
+&< \sqrt{1-4\gamma_{WLA}^2} \quad\quad (\gamma_t > \gamma_{WLA}) \\
+&= r < 1 \quad \quad \left(\gamma_{WLA}\in(0,\frac{1}{2})\right)
+\end{aligned}
+$$
+
+This gives us 
+$$
+\text{training error} < \prod_{t=1}^T Z_t < \prod_{t=1}^T r = r^T
+$$
+
+Since $r<1$, we can view $r^T$ as a monotonically decreasing sequence in $T$. Given $\epsilon > 0$, take
+$$T > \frac{\log{\epsilon}}{\log{r}}$$
+Then we have 
+$$
+T\log r < \log\epsilon \implies r^T<\epsilon
+$$
+
+Bringing it all together, we get $\forall \epsilon > 0, \exists ~T$ such that.
+$$
+\text{training error} < \epsilon 
+$$
+
+##### (b) Weighted Points in Training Set
+
+
+ 
