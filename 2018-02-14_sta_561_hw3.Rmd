@@ -4,7 +4,9 @@ author: "Daniel Truver"
 date: "2/7/2018"
 header-includes:
   - \usepackage{amsmath}
-output: pdf_document
+output: 
+  pdf_document: 
+    keep_tex: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -47,7 +49,7 @@ $$
 Therefore, $X$ and $X'$ are disjoint; the convex hulls do not intersect. 
 
 ******
-
+\newpage
 #### (2) Logistic Regression and Gradient Descent
 
 ##### (a) Logistic Sigmoid Function 
@@ -229,7 +231,7 @@ $$
 0 
 &= \frac{\partial R^{train}(\lambda_t+\alpha e_{j_t})}{\partial\alpha}\Biggr|_{\alpha_t}\\
 &= -\sum_{i=1}^n w_i M_{ij_t} e^{-(M\lambda_t)_i-\alpha_tM_{ij_t}} \\
-&= -\sum_{i:M_{ij_t = 1}}w_i e^{-(M\lambda_t)_i}e^{-\alpha_t} - \sum_{i:M_{ij_t = -1}w_i - e^{(M\lambda_t)_i}e^{\alpha_t}
+&= -\sum_{i:M_{ij_t = 1}}w_i e^{-(M\lambda_t)_i}e^{-\alpha_t} - \sum_{i:M_{ij_t = -1}}w_i - e^{(M\lambda_t)_i}e^{\alpha_t}
 \end{aligned}
 $$
  
@@ -247,4 +249,10 @@ $$
 So, in the end, the coordinate descent algorithm is...exactly the same. The only difference is that 
 $$
 d_{1,i} = w_i \text{ for } i = 1,\dots, n.
-$$
+$$  
+
+Now, to justify this result to myself, I'll walk through my intuition. 
+
+The idea of the AdaBoost algorithm is to iteratively reduce the training error by up-weighting misclassified points and down-weighting correctly classified points. We do not want to substantially alter this behavior. Instead, we set the initial importance of the points by choosing our own weights. Points that we consider important will start off with much more weight in the algorithm and will keep that extra weight through several iterations (how many iteration is context dependent). This additional weight in the beginning will make our algorithm prioritize the highly weighted points and try to classfy them correctly from the start. I suspect this is useful when we have imbalanced data. 
+
+##### (c) See Code
