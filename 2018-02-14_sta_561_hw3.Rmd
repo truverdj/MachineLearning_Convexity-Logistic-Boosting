@@ -197,5 +197,54 @@ $$
 
 ##### (b) Weighted Points in Training Set
 
+Suppose that our objective is
+$$
+R^{train}(\lambda) = \sum_{i=1}^n w_ie^{-(M\lambda)_i}
+$$
 
+It seems that the standard AdaBoost we already derived is just a special case of this where all weights are $w_i = 1/n$. For this reason, the derivation and results should look similar. We are still going to look for an optimal direction and step size in that direction to iteratively reduce the objective above. That is, we are still doing coordinate descent, just with more subscripts to track.
+
+$$
+\begin{aligned}
+j_t
+&\in \text{argmax}_j\left[ -\frac{\partial R^{train}(\lambda_t + \alpha \mathbf{e}_j)}{\partial\alpha}\Biggr|_{\alpha = 0} \right] \\
+&= \text{argmax}_j\left[ -\frac{\partial}{\partial\alpha} \left[ \sum_{i=1}^n w_ie^{-(M(\lambda_t + \alpha e_j))_i} \right] \Biggr|_{\alpha = 0} \right] \\
+&= \text{argmax}_j\left[ \sum_{i=1}^n w_iM_{ij}e^{-(M\lambda_t)_i} \right] \quad \text{(some algebra later)}
+\end{aligned}
+$$
+
+This time, our discrete probability distribution will be 
+$$
+d_{t,i} = w_ie^{-(M\lambda_t)_i}/Z_t \text{ where } Z_t = \sum_{i=1}^n w_ie^{-(M\lambda_t)_i} 
+$$
+
+Same as before, the argmax does not change when we multiply by $Z_t$ and we have absorbed the $w_i$ into our distribution, so we are left with 
+$$
+j_t \in \text{argmax}_j\sum_{i=1}^n M_{ij}d_{t,i} = \text{argmax}(d_t^TM)_j.
+$$  
+
+Our caculation of the step size is also fairly similar. We search along the direction $j_t$ by setting the derivative equal to 0. 
+$$
+\begin{aligned}
+0 
+&= \frac{\partial R^{train}(\lambda_t+\alpha e_{j_t})}{\partial\alpha}\Biggr|_{\alpha_t}\\
+&= -\sum_{i=1}^n w_i M_{ij_t} e^{-(M\lambda_t)_i-\alpha_tM_{ij_t}} \\
+&= -\sum_{i:M_{ij_t = 1}}w_i e^{-(M\lambda_t)_i}e^{-\alpha_t} - \sum_{i:M_{ij_t = -1}w_i - e^{(M\lambda_t)_i}e^{\alpha_t}
+\end{aligned}
+$$
  
+Now we multiply by $-1/Z_t$ to get us one step closer to the end of our suffering:
+
+$$
+\begin{aligned}
+0 &= \sum_{i:M_{ij_t = 1}} d_{t,i}e^{-\alpha_t} - \sum_{i:M_{ij_t = -1}}d_{t,i}e^{\alpha_t}\\
+&=: d_+e^{-\alpha_t} - d_-e^{\alpha_t} \\
+d_-e^{\alpha_t} &= d_+e^{-\alpha_t} \\
+\alpha_t &= \frac{1}{2}\ln\frac{1-d_-}{d_-}
+\end{aligned}
+$$
+
+So, in the end, the coordinate descent algorithm is...exactly the same. The only difference is that 
+$$
+d_{1,i} = w_i \text{ for } i = 1,\dots, n.
+$$
